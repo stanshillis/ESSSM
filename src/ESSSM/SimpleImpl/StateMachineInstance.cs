@@ -23,7 +23,7 @@ namespace ESSSM.SimpleImpl
             initState.CurrentState.Enter(context);
         }
 
-        public void Receive<TInput>(TInput input)
+        public void Receive(object input)
         {
             currentState = stateMachine.Receive(input, currentState, context);
         }

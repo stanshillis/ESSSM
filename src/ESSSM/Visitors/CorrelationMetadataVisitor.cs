@@ -6,6 +6,21 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 
+namespace ESSSM
+{
+
+    public static class StateMachineCorrelationExtensions
+    {
+        public const string CORRELATION_METADATA_KEY = "CorrelatedBy";
+
+        public static TReturn CorrelatedBy<TContext, TInput, TReturn>(this IRecordTransitionMetadata<TContext, TInput, TReturn> self,
+            Expression<Func<TContext, TInput, bool>> correlationExpr)
+        {
+            return self.WithMetadata(CORRELATION_METADATA_KEY, correlationExpr);
+        }
+    }
+}
+
 namespace ESSSM.Visitors
 {   
     public class CorrelationMetadataVisitor<TState, TContext> : IVisitStateTransition<TState,TContext>
@@ -91,17 +106,6 @@ namespace ESSSM.Visitors
             {
                 throw new UnexpectedCorrelationExpressionExcpetion(sourceState, inputType, correlationExpr, e);
             }
-        }
-    }
-
-    public static class StateMachineCorrelationExtensions
-    {
-        public const string CORRELATION_METADATA_KEY = "CorrelatedBy";
-
-        public static TReturn CorrelatedBy<TContext, TInput, TReturn>(this IRecordTransitionMetadata<TContext, TInput, TReturn> self,
-            Expression<Func<TContext, TInput, bool>> correlationExpr)
-        {
-            return self.WithMetadata(CORRELATION_METADATA_KEY, correlationExpr);
         }
     }
 }

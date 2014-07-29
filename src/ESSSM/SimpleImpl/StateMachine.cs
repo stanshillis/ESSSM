@@ -19,9 +19,9 @@ namespace ESSSM.SimpleImpl
             this.initState = stateDefinitions[initState];
         }
 
-        public InProgressMachineData<TState, TContext> Receive<TInput>(TInput input, InProgressMachineData<TState, TContext> inProgressState, TContext context)
+        public InProgressMachineData<TState, TContext> Receive(object input, InProgressMachineData<TState, TContext> inProgressState, TContext context)
         {
-            Type inputType = typeof(TInput);
+            Type inputType = input.GetType();
             StateDefinition<TState, TContext> currentState = inProgressState.CurrentState;
             inProgressState.PendingInput.Add(input);
 

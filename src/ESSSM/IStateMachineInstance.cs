@@ -7,6 +7,6 @@ namespace ESSSM
 {
     public interface IStateMachineInstance<TState, TContext>
     {
-        void Receive<TInput>(TInput input);
+        void Receive(object input);
     }
 }
