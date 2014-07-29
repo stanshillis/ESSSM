@@ -8,6 +8,10 @@ namespace ESSSM
 
         void VisitTransitions(IVisitStateTransition<TState, TContext> visitor);
 
+        void VisitInitialTransitions(IVisitStateTransition<TState, TContext> visitor);
+
         void VisitStates(IVisitState<TState> visitor);
+
+        void VisitInitialState(IVisitState<TState> visitor);
     }
 }

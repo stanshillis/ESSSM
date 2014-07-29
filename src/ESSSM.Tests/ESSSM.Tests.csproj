@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="SimpleImpl\SimpleCorrelationMetadataVisitorTest.cs" />
     <Compile Include="SimpleImpl\SimpleStateTransitionVisitorTest.cs" />
+    <Compile Include="SimpleImpl\SimpleStateVisitorTest.cs" />
     <Compile Include="Visitors\CorrelationMetadataVisitorTest.cs" />
     <Compile Include="SimpleImpl\SimpleStateMachineConfigurationTest.cs" />
     <Compile Include="Visitors\StateTransitionVisitorTest.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StateMachineConfigurationTests.cs" />
     <Compile Include="SimpleImpl\TransitionSortabilityTest.cs" />
+    <Compile Include="Visitors\StateVisitorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

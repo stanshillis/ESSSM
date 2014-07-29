@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>ESSSM</id>
+    <version>1.0.0</version>
+    <title>ESSSM</title>
+    <authors>Stan Shillis</authors>
+    <owners>Stan Shillis</owners>
+    <licenseUrl>https://github.com/stanshillis/ESSSM/blob/master/doc/license.txt</licenseUrl>
+    <projectUrl>https://github.com/stanshillis/ESSSM</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Event Sourced Saga State Machine project handles state and correlation management for an event sourced saga/process manager</description>
+    <summary>Event Sourced Saga State Machine project handles state and correlation management for an event sourced saga/process manager</summary>
+    <tags>state machine, saga, process manager, event sourcing, cqrs</tags>
+  </metadata>
+  <files>
+    <file src="publish-net35\bin\**" target="lib\net35"/>
+	<file src="publish-net35\README.txt" target="" />
+  </files>  
+</package>

@@ -57,6 +57,10 @@ namespace ESSSM.SimpleImpl
             }
         }
 
+        public void VisitInitialTransitions(IVisitStateTransition<TState, TContext> visitor)
+        {
+            initState.VisitTransitions(visitor);
+        }
 
         public void VisitStates(IVisitState<TState> visitor)
         {
@@ -64,6 +68,11 @@ namespace ESSSM.SimpleImpl
             {
                 state.VisitState(visitor);
             }
+        }       
+
+        public void VisitInitialState(IVisitState<TState> visitor)
+        {
+            initState.VisitState(visitor);
         }
     }
 }

@@ -268,5 +268,33 @@ namespace ESSSM.Tests
                         .NoTransition()
                     .Build());
         }
+
+        [Fact]
+        public void VisitCorrectInitialTransitions()
+        {
+            var sut = GetStateMachineConfiguration()
+                        .Initially(States.Three)
+                            .AwaitAll()
+                                .Await<MessageA>()
+                                .Await<MessageB>()
+                                .TransitionTo(States.Two)
+                        .During(States.Two)
+                            .Await<MessageC>()
+                                .NoTransition()
+                        .Build();
+
+            var testVisitor = new TestTransitionVisitor();
+            sut.VisitInitialTransitions(testVisitor);
+
+            Assert.Equal(1, testVisitor.Transitions.Keys.Count);
+            Assert.True(testVisitor.Transitions.ContainsKey(States.Three));
+            Assert.Equal(1, testVisitor.Transitions[States.Three].Count);
+
+            var trans1 = testVisitor.Transitions[States.Three][0];
+            Assert.Equal(2, trans1.InputTypes.Count());
+            Assert.Equal(typeof(MessageA), trans1.InputTypes.First());
+            Assert.Equal(typeof(MessageB), trans1.InputTypes.Skip(1).First());
+            Assert.Equal(States.Two, trans1.DestinationState);
+        }
     }
 }
