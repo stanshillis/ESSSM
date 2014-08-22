@@ -4,10 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ESSSM.Tests.SimpleImpl
 {
-    public class SimpleCorrelationMetadataVisitorTest : CorrelationMetadataVisitorTest
+    public class SimpleStartedByMessageTypesVisitorTest : StartedByMessageTypesVisitorTest
     {
         public override Configuration.IConfigureStateMachineInitially<States, Ctx> GetStateMachineConfiguration()
         {

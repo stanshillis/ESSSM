@@ -71,10 +71,16 @@
     <Compile Include="SimpleImpl\StateUndefinedException.cs" />
     <Compile Include="SimpleImpl\TransitionDefinition.cs" />
     <Compile Include="StateMachine.cs" />
-    <Compile Include="Visitors\CorrelationMetadataVisitor.cs" />
+    <Compile Include="StateMachineCorrelationExtensions.cs" />
+    <Compile Include="Visitors\Correlation\CorrelationKey.cs" />
+    <Compile Include="Visitors\Correlation\CorrelationData.cs" />
+    <Compile Include="Visitors\Correlation\CorrelationMetadataVisitor.cs" />
+    <Compile Include="Visitors\Correlation\ExprParsers\EqualsParser.cs" />
+    <Compile Include="Visitors\StartedByMessageTypesVisitor.cs" />
+    <Compile Include="Visitors\Correlation\IParseCorrelationExpr.cs" />
     <Compile Include="Visitors\MachineVerifierVisitor.cs" />
     <Compile Include="Visitors\TransitionToUndefinedStateException.cs" />
-    <Compile Include="Visitors\UnexpectedCorrelationExpressionExcpetion.cs" />
+    <Compile Include="Visitors\Correlation\UnexpectedCorrelationExpressionException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

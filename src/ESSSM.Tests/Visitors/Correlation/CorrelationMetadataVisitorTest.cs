@@ -5,10 +5,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using Xunit;
-using ESSSM.Visitors;
+using ESSSM.Visitors.Correlation;
 using ESSSM.Configuration;
+using ESSSM.Visitors.Correlation.ExprParsers;
 
-namespace ESSSM.Tests
+namespace ESSSM.Tests.Visitors.Correlation
 {
     public abstract class CorrelationMetadataVisitorTest
     {
@@ -28,12 +29,11 @@ namespace ESSSM.Tests
                                 .NoTransition()
                         .Build();
 
-            var sut = new CorrelationMetadataVisitor<States, Ctx>();
-            sm.VisitTransitions(sut);
+            var sut = sm.GetAllCorrelations();
 
-            Assert.Equal(2, sut.Correlations.Count());
+            Assert.Equal(2, sut.Count());
 
-            var correlations = sut.Correlations.ToDictionary(cd => cd.InputType);
+            var correlations = sut.ToDictionary(cd => cd.InputType);
             Assert.True(correlations.ContainsKey(typeof(MessageC)));
             Assert.True(correlations.ContainsKey(typeof(MessageB)));
 
@@ -53,29 +53,55 @@ namespace ESSSM.Tests
         [Fact]
         public void SupportEqualsCorrelationWithInputOnTheLeft()
         {
-            var sm = GetStateMachineConfiguration()
+            var sut = GetStateMachineConfiguration()
                         .Initially(States.One)
                             .Await<MessageC>()
                                 .CorrelatedBy((ctx, m) => m.Id == ctx.Id)
                                 .NoTransition()
                         .Build();
 
-            var sut = new CorrelationMetadataVisitor<States, Ctx>();
-            Assert.DoesNotThrow(() => sm.VisitTransitions(sut));
+            Assert.DoesNotThrow(() => sut.GetAllCorrelations());
         }
 
         [Fact]
         public void SupportEqualsCorrelationWithContextOnTheLeft()
         {
-            var sm = GetStateMachineConfiguration()
+            var sut = GetStateMachineConfiguration()
                         .Initially(States.One)
                             .Await<MessageC>()
                                 .CorrelatedBy((ctx, m) => ctx.Id == m.Id)
                                 .NoTransition()
                         .Build();
 
-            var sut = new CorrelationMetadataVisitor<States, Ctx>();
-            Assert.DoesNotThrow(() => sm.VisitTransitions(sut));
+            Assert.DoesNotThrow(() => sut.GetAllCorrelations());
+        }
+
+        [Fact]
+        public void CorrelationVisitorHasStateMachineExtension()
+        {
+            var sut = GetStateMachineConfiguration()
+                        .Initially(States.One)
+                            .Await<MessageC>()
+                                .CorrelatedBy((ctx, m) => ctx.Id == m.Id)
+                                .NoTransition()
+                        .Build();
+
+            var visitor = new CorrelationMetadataVisitor<States, Ctx>(new EqualsParser());
+            sut.VisitTransitions(visitor);
+            var expected = visitor.Correlations;
+
+            var result = sut.GetAllCorrelations();
+
+            // verify that extension call produces same result as manual visitor call
+            Assert.True(expected.Count() > 0);
+            var resultCorrIterator = result.GetEnumerator();
+            foreach(var expectedCorr in expected)
+            {
+                resultCorrIterator.MoveNext();
+                var resultCorr = resultCorrIterator.Current;
+
+                Assert.True(expectedCorr.Equals(resultCorr));                
+            }
         }
 
     }

@@ -53,9 +53,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SimpleImpl\SimpleCorrelationMetadataVisitorTest.cs" />
+    <Compile Include="SimpleImpl\SimpleStartedByMessageTypesVisitorTest.cs" />
     <Compile Include="SimpleImpl\SimpleStateTransitionVisitorTest.cs" />
     <Compile Include="SimpleImpl\SimpleStateVisitorTest.cs" />
-    <Compile Include="Visitors\CorrelationMetadataVisitorTest.cs" />
+    <Compile Include="Visitors\Correlation\StartedByMessageTypesVisitorTest.cs" />
+    <Compile Include="Visitors\Correlation\CorrelationMetadataVisitorTest.cs" />
     <Compile Include="SimpleImpl\SimpleStateMachineConfigurationTest.cs" />
     <Compile Include="Visitors\StateTransitionVisitorTest.cs" />
     <Compile Include="StateMachineTests.cs" />
