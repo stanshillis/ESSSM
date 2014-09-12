@@ -53,7 +53,7 @@ namespace ESSSM.SimpleImpl
             OnEnterDelegate(context);
         }
 
-        public bool TryProcessInput(TContext ctx, IEnumerable<object> inputSequence, out TState nextState, out IEnumerable<object> unprocessedInputSequence)
+        public bool TryProcessInput(TContext ctx, IEnumerable<object> inputSequence, out TState nextState, out IEnumerable<object> unprocessedInputSequence, Action<TContext> unhandledCallback)
         {
             if (!inputSequence.Any())
             {
@@ -69,6 +69,8 @@ namespace ESSSM.SimpleImpl
                 // no transition defined for this input, skip!
                 nextState = State;
                 unprocessedInputSequence = inputSequence.Skip(1);
+
+                unhandledCallback(ctx);
                 return false;
             }
 

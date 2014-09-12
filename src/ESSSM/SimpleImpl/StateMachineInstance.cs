@@ -23,9 +23,9 @@ namespace ESSSM.SimpleImpl
             initState.CurrentState.Enter(context);
         }
 
-        public void Receive(object input)
+        public void Receive(object input, Action<TContext> unhandledCallback)
         {
-            currentState = stateMachine.Receive(input, currentState, context);
+            currentState = stateMachine.Receive(input, currentState, context, unhandledCallback);
         }
     }
 }

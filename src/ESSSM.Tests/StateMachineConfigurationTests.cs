@@ -331,5 +331,41 @@ namespace ESSSM.Tests
             sut.Receive(new MessageA());
             Assert.Equal(States.Three, context.CurrentState);
         }
+
+        [Fact]
+        public void UnhandledHandlerIsNotCalledWhenMessageIsProcessed()
+        {
+            var context = new Ctx();
+
+            var sut = GetStateMachineConfiguration()
+                            .Initially(States.One)
+                                .Await<MessageA>().TransitionTo(States.Two)
+                            .During(States.Two)
+                                .Await<MessageB>().NoTransition()
+                            .Build().CreateInstance(context);
+            
+            var handlerCalled = false;
+            sut.Receive(new MessageA(), ctx => handlerCalled = true);
+
+            Assert.False(handlerCalled);
+        }
+
+        [Fact]
+        public void UnhandledHandlerIsCalledWhenMessageIsNotProcessed()
+        {
+            var context = new Ctx();
+
+            var sut = GetStateMachineConfiguration()
+                            .Initially(States.One)
+                                .Await<MessageA>().TransitionTo(States.Two)
+                            .During(States.Two)
+                                .Await<MessageB>().NoTransition()
+                            .Build().CreateInstance(context);
+
+            var handlerCalled = false;
+            sut.Receive(new MessageC(), ctx => handlerCalled = true);
+
+            Assert.True(handlerCalled);
+        }
     }
 }

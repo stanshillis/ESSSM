@@ -19,7 +19,7 @@ namespace ESSSM.SimpleImpl
             this.initState = stateDefinitions[initState];
         }
 
-        public InProgressMachineData<TState, TContext> Receive(object input, InProgressMachineData<TState, TContext> inProgressState, TContext context)
+        public InProgressMachineData<TState, TContext> Receive(object input, InProgressMachineData<TState, TContext> inProgressState, TContext context, Action<TContext> unhandledCallback)
         {
             Type inputType = input.GetType();
             StateDefinition<TState, TContext> currentState = inProgressState.CurrentState;
@@ -28,7 +28,7 @@ namespace ESSSM.SimpleImpl
             IEnumerable<object> inputSequence = inProgressState.PendingInput;
             TState nextStateId;
 
-            while(currentState.TryProcessInput(context, inputSequence, out nextStateId, out inputSequence))
+            while (currentState.TryProcessInput(context, inputSequence, out nextStateId, out inputSequence, unhandledCallback))
             {
                 if (!stateDefinitions.TryGetValue(nextStateId, out currentState))
                 {
