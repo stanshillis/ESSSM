@@ -8,7 +8,7 @@ properties {
 	$sln_file = "$src_directory\ESSSM.sln"
 	$target_config = "Release"
 	$framework_version = "v3.5"
-	$version = "1.0.0.0"
+	$version = "2.0.0.0"
 
 	$nuget_dir = "$base_directory\tools\.nuget"
 }

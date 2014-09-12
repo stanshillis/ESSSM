@@ -40,7 +40,8 @@ namespace ESSSM.Visitors.Correlation.ExprParsers
                     inputExpr.Expression.Type,
                     contextValDelegate,
                     inputValDelegate,
-                    inputExpr.Member.Name);
+                    inputExpr.Member.Name,
+                    contextExpr.Member.Name);
                 return true;
             }
             else

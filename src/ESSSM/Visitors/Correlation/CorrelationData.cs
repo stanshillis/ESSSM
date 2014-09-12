@@ -10,12 +10,13 @@ namespace ESSSM.Visitors.Correlation
         private Func<TContext, object> contextDelegate;
         private Delegate inputDelegate;
 
-        public CorrelationData(Type inputType, Func<TContext, object> contextDelegate, Delegate inputDelegate, string id)
+        public CorrelationData(Type inputType, Func<TContext, object> contextDelegate, Delegate inputDelegate, string inputMemberName, string contextMemberName)
         {
             this.contextDelegate = contextDelegate;
             this.inputDelegate = inputDelegate;
             this.InputType = inputType;
-            this.Id = id;
+            this.InputMemberName = inputMemberName;
+            this.ContextMemberName = contextMemberName;
         }
 
         public object EvalUnderContext(TContext context)
@@ -28,13 +29,15 @@ namespace ESSSM.Visitors.Correlation
             return inputDelegate.DynamicInvoke(input);
         }
 
-        public string Id { get; private set; }
+        public string InputMemberName { get; private set; }
+
+        public string ContextMemberName { get; private set; }
 
         public Type InputType { get; private set; }
 
         public bool Equals(CorrelationData<TContext> other)
         {
-            return this.Id == other.Id
+            return this.InputMemberName == other.InputMemberName
                 && this.InputType == other.InputType;
         }
     }

@@ -43,11 +43,13 @@ namespace ESSSM.Tests.Visitors.Correlation
 
             Assert.Equal(testContext.Id, correlations[typeof(MessageC)].EvalUnderContext(testContext));
             Assert.Equal(testMessageC.Id, correlations[typeof(MessageC)].EvalUnderInput(testMessageC));
-            Assert.Equal("Id", correlations[typeof(MessageC)].Id);
+            Assert.Equal("Id", correlations[typeof(MessageC)].InputMemberName);
+            Assert.Equal("Id", correlations[typeof(MessageC)].ContextMemberName);
 
             Assert.Equal(testContext.Id, correlations[typeof(MessageB)].EvalUnderContext(testContext));
             Assert.Equal(testMessageB.MessageId, correlations[typeof(MessageB)].EvalUnderInput(testMessageB));
-            Assert.Equal("MessageId", correlations[typeof(MessageB)].Id);
+            Assert.Equal("MessageId", correlations[typeof(MessageB)].InputMemberName);
+            Assert.Equal("Id", correlations[typeof(MessageB)].ContextMemberName);
         }
 
         [Fact]
