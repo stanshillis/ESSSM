@@ -21,7 +21,7 @@ namespace ESSSM
         public static IEnumerable<CorrelationData<TContext>> GetAllCorrelations<TState, TContext>(this IStateMachine<TState, TContext> self)
         {
             var correlationVisitor = new CorrelationMetadataVisitor<TState, TContext>(new EqualsParser());
-            self.VisitInitialTransitions(correlationVisitor);
+            self.VisitTransitions(correlationVisitor);
             return correlationVisitor.Correlations;
         }
 

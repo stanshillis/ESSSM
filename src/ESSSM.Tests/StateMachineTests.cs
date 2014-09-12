@@ -32,5 +32,22 @@ namespace ESSSM.Tests
 
             Assert.Throws<TransitionToUndefinedStateException<States>>(() => sut.Build());
         }
+
+        [Fact]
+        public void GetAllCorrelationsExtensionsReturnsAllCorrelations()
+        {
+            var sut = StateMachine.Configure<States, Ctx>()
+                            .Initially(States.One)
+                                .Await<MessageB>().CorrelatedBy((ctx, m) => ctx.Id == m.MessageId)
+                                    .TransitionTo(States.Two)
+                            .During(States.Two)
+                                .Await<MessageC>().CorrelatedBy((ctx, m) => ctx.Id == m.Id)
+                                    .NoTransition()
+                            .Build();
+
+            var correlations = sut.GetAllCorrelations();
+
+            Assert.Equal(2, correlations.Count());
+        }
     }
 }
